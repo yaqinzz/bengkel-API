@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use(
   cors({
-    origin: 'https://bengkel-api-nine.vercel.app/',
+    origin: 'https://bengkel-api-zeta.vercel.app',
   })
 )
 app.use(cookieParser())
