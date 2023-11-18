@@ -10,14 +10,14 @@ const port = 3000
 
 //middlewares
 app.use(express.json())
+app.use(express.json())
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true)
   next()
 })
-app.use(express.json())
 app.use(
   cors({
-    origin: 'https://bengkel-api-zeta.vercel.app',
+    origin: '*',
   })
 )
 app.use(cookieParser())
