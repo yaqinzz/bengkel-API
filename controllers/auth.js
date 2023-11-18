@@ -1,6 +1,11 @@
 import {db} from '../connect.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import {response} from '../response.js'
+
+export const home = (req, res) => {
+  response(200, 'selamat datang', 'BENGKEL API', res)
+}
 
 export const registerCustomer = (req, res) => {
   //check user  if exit

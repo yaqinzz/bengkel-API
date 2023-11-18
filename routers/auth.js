@@ -1,7 +1,8 @@
 import express from 'express'
-import {loginAdmin, loginCustomer, logout, registerAdmin, registerCustomer} from '../controllers/auth.js'
+import {home, loginAdmin, loginCustomer, logout, registerAdmin, registerCustomer} from '../controllers/auth.js'
 const router = express.Router()
 
+router.get('/', home)
 router.post('/loginCustomer', loginCustomer)
 router.post('/loginAdmin', loginAdmin)
 router.post('/registerCustomer', registerCustomer)

@@ -21,7 +21,7 @@ app.use(
   })
 )
 app.use(cookieParser())
-
+app.use('/', authRouters)
 app.use('/api/auth', authRouters)
 app.use('/api/admin', adminRouters)
 app.use('/api/customer', customerRoters)
