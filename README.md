@@ -15,3 +15,7 @@
 | Admin Login | `/api/auth/loginAdmin`|
 | Admin Register | `/api/auth/registerAdmin` |
 | Logout Akun | `/api/auth/logout` |
+| get data customer | `/api/customer/allCustomer` |
+| get data admin | `/api/admin/allAdmin` |
+
+
