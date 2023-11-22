@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 // )
 
 const corsConfig = {
-  origin: '',
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }
@@ -39,5 +39,3 @@ app.use('/api/customer', customerRoters)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port} `)
 })
-
-export default app
