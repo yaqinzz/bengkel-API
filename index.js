@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express()
-const port = 3000
+const port = 5000
 
 //middlewares
 app.use(express.json())
@@ -20,12 +20,6 @@ app.use((req, res, next) => {
 //     origin: '*',
 //   })
 // )
-const corsConfig = {
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}
-app.use(cors(corsConfig))
-app.options('', cors(corsConfig))
 
 app.use(cookieParser())
 app.use('/', authRouters)
