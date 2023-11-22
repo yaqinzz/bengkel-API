@@ -31,10 +31,7 @@ app.use(cors(corsConfig))
 app.options('', cors(corsConfig))
 
 app.use(cookieParser())
-// app.use('/', authRouters)
-app.get('/', (req, res) => {
-  res.send('selamat datang')
-})
+app.use('/', authRouters)
 
 app.use('/api/auth', authRouters)
 app.use('/api/admin', adminRouters)
