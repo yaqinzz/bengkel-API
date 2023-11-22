@@ -4,6 +4,7 @@ import adminRouters from './routers/userAdmin.js'
 import customerRoters from './routers/userCustomer.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import {response} from './response.js'
 
 const app = express()
 const port = 5000
@@ -30,7 +31,11 @@ app.use(cors(corsConfig))
 app.options('', cors(corsConfig))
 
 app.use(cookieParser())
-app.use('/', authRouters)
+// app.use('/', authRouters)
+app.get('/', (req, res) => {
+  res.send('selamat datang')
+})
+
 app.use('/api/auth', authRouters)
 app.use('/api/admin', adminRouters)
 app.use('/api/customer', customerRoters)
