@@ -1,7 +1,6 @@
 // import U from '../models/UserModel.js'
 import {Op} from 'sequelize'
 
-import {response} from '../response.js'
 import {UserCustomer} from '../models/UserModel.js'
 
 export const getUserCustomer = async (req, res) => {
