@@ -2,54 +2,77 @@ import {db} from '../connect.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import {response} from '../response.js'
+import {UserAdmin, UserCustomer} from '../models/UserModel.js'
 
 export const home = (req, res) => {
   response(200, 'selamat datang', 'BENGKEL API', res)
 }
 
-export const registerCustomer = (req, res) => {
-  //check user  if exit
-  const q = 'SELECT * FROM customer WHERE username =?'
+export const registerCustomer = async (req, res) => {
+  try {
+    // Periksa apakah pengguna sudah ada
+    const existingAdmin = await UserCustomer.findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
 
-  db.query(q, [req.body.username], (err, data) => {
-    if (err) return res.status(500).json(err)
-    if (data.length) return res.status(409).json('User already exits!')
-    //create new user
-    //hash pasword
+    if (existingAdmin) {
+      return res.status(409).json('User already exists!')
+    }
+
+    // Buat pengguna baru
+    // Hash password
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(req.body.password, salt)
 
-    const q = 'INSERT INTO customer (`name`,`tlp`,`email`,`username`,`password`) VALUE (?)'
-
-    const values = [req.body.name, req.body.tlp, req.body.email, req.body.username, hashedPassword]
-
-    db.query(q, [values], (err, data) => {
-      if (err) return res.status(500).json(err)
-      return res.status(200).json('User has been created.')
+    // Simpan pengguna baru ke database
+    const newAdmin = await UserCustomer.create({
+      name: req.body.name,
+      tlp: req.body.tlp,
+      email: req.body.email,
+      username: req.body.username,
+      password: hashedPassword,
     })
-  })
+
+    return res.status(200).json('User has been created.')
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json(error.message || 'Internal Server Error')
+  }
 }
-export const registerAdmin = (req, res) => {
-  //check user  if exit
-  const q = 'SELECT * FROM admin WHERE username =?'
+export const registerAdmin = async (req, res) => {
+  try {
+    // Periksa apakah pengguna sudah ada
+    const existingAdmin = await UserAdmin.findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
 
-  db.query(q, [req.body.username], (err, data) => {
-    if (err) return res.status(500).json(err)
-    if (data.length) return res.status(409).json('User already exits!')
-    //create new user
-    //hash pasword
+    if (existingAdmin) {
+      return res.status(409).json('User already exists!')
+    }
+
+    // Buat pengguna baru
+    // Hash password
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(req.body.password, salt)
 
-    const q = 'INSERT INTO admin (`name`,`tlp`,`email`,`username`,`password`) VALUE (?)'
-
-    const values = [req.body.name, req.body.tlp, req.body.email, req.body.username, hashedPassword]
-
-    db.query(q, [values], (err, data) => {
-      if (err) return res.status(500).json(err)
-      return res.status(200).json('User has been created.')
+    // Simpan pengguna baru ke database
+    const newAdmin = await UserAdmin.create({
+      name: req.body.name,
+      tlp: req.body.tlp,
+      email: req.body.email,
+      username: req.body.username,
+      password: hashedPassword,
     })
-  })
+
+    return res.status(200).json('User has been created.')
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json(error.message || 'Internal Server Error')
+  }
 }
 export const loginAdmin = (req, res) => {
   const q = 'SELECT * FROM admin WHERE username = ?'
