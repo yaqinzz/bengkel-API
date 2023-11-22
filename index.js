@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 //   })
 // )
 const corsConfig = {
-  origin: '',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }
 app.use(cors(corsConfig))
