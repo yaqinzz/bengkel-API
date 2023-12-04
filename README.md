@@ -1,6 +1,6 @@
 # bengkel-API
 ---
-### Base Url : `https://bengkel-api-zeta.vercel.app`
+### Base Url : `https://bengkel-api-ruby.vercel.app/`
 ---
 ### Endpoint Usage Mobile App Dev
 | Endpoint | Usage |
