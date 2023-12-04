@@ -4,7 +4,7 @@ import mysql2 from 'mysql2'
 dotenv.config()
 
 export const db = new Sequelize({
-  // dialect: 'mysql',
+  dialect: 'mysql',
   dialectModule: mysql2,
   host: process.env.DB_HOST,
   username: process.env.DB_USERNAME,
