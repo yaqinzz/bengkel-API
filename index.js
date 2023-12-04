@@ -4,7 +4,7 @@ import adminRouters from './routers/userAdmin.js'
 import customerRoters from './routers/userCustomer.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import {response} from './response.js'
+// import {response} from './response.js'
 
 const app = express()
 const port = 5000
