@@ -2,18 +2,20 @@
 // import {Op} from 'sequelize'
 import query from '../database/connect.js'
 
-// export const getUserAdmin = async (req, res) => {
-//   try {
-//     const response = await UserAdmin.findOne({
-//       where: {
-//         id_admin: req.params.adminId,
-//       },
-//     })
-//     res.status(200).json(response)
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
+export const getUserAdmin = async (req, res) => {
+  try {
+    const response = await query('SELECT * FROM admin WHERE id_admin = ?', [req.params.adminId])
+
+    if (response.length > 0) {
+      res.status(200).json(response)
+    } else {
+      res.status(404).json({message: 'User Admin not found'})
+    }
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({message: 'Internal Server Error'})
+  }
+}
 export const getUserAllAdmin = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 0
@@ -65,18 +67,14 @@ export const getUserAllAdmin = async (req, res) => {
   }
 }
 
-// export const updateAdmin = async (req, res) => {
-//   try {
-//     await UserAdmin.update(req.body, {
-//       where: {
-//         id_admin: req.params.adminId,
-//       },
-//     })
-//     res.status(200).json('User Updated')
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
+export const updateAdmin = async (req, res) => {
+  try {
+    await query('UPDATE admin SET ? WHERE id_admin = ?', [req.body, req.params.adminId])
+    res.status(200).json('User Updated')
+  } catch (error) {
+    console.log(error.message)
+  }
+}
 
 export const deletedAdmin = async (req, res) => {
   try {

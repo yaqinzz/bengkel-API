@@ -59,37 +59,6 @@ export const registerCustomer = async (req, res) => {
   } catch (error) {
     return res.status(400).json('Something went wrong!')
   }
-  // try {
-  //   // Periksa apakah pengguna sudah ada
-  //   const existingAdmin = await UserCustomer.findOne({
-  //     where: {
-  //       username: req.body.username,
-  //     },
-  //   })
-
-  //   if (existingAdmin) {
-  //     return res.status(409).json('User already exists!')
-  //   }
-
-  //   // Buat pengguna baru
-  //   // Hash password
-  //   const salt = bcrypt.genSaltSync(10)
-  //   const hashedPassword = bcrypt.hashSync(req.body.password, salt)
-
-  //   // Simpan pengguna baru ke database
-  //   const newAdmin = await UserCustomer.create({
-  //     name: req.body.name,
-  //     tlp: req.body.tlp,
-  //     email: req.body.email,
-  //     username: req.body.username,
-  //     password: hashedPassword,
-  //   })
-
-  //   return res.status(200).json('User has been created.')
-  // } catch (error) {
-  //   console.error(error)
-  //   return res.status(500).json(error.message || 'Internal Server Error')
-  // }
 }
 export const registerAdmin = async (req, res) => {
   // response(200, 'selamat datang', 'BENGKEL API', res)
@@ -153,7 +122,7 @@ export const loginAdmin = async (req, res) => {
       return res.status(400).json('Wrong password or name!')
     }
 
-    const token = jwt.sign({id: data[0].id}, 'secretkey')
+    const token = jwt.sign({id_admin: data[0].id_admin}, 'secretkey')
 
     const {password: _, ...others} = data[0] // Rename password to _ to exclude it
     res
@@ -183,7 +152,7 @@ export const loginCustomer = async (req, res) => {
       return res.status(400).json('Wrong password or name!')
     }
 
-    const token = jwt.sign({id: data[0].id}, 'secretkey')
+    const token = jwt.sign({id_customer: data[0].id_customer}, 'secretkey')
 
     const {password: _, ...others} = data[0] // Rename password to _ to exclude it
     res
