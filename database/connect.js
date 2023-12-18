@@ -3,10 +3,16 @@ import mysql from 'mysql2/promise'
 dotenv.config()
 
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD, //!sdw%2sdscas.`
+  // UNTUK LOKAL
+  host: "localhost",
+  user: "root",
+  database: "bengkel",
+
+  // host: process.env.DB_HOST,
+  // user: process.env.DB_USERNAME,
+  // database: process.env.DB_NAME,
+  // password: process.env.DB_PASSWORD, //!sdw%2sdscas.`
+
   connectionLimit: 10,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,

@@ -5,6 +5,9 @@ import customerRoters from './userCustomer.js'
 import booking from './booking.js'
 import pickup from './pickup.js'
 
+// IMPORT LAPORAN
+import laporanRoutes from './laporan.js'
+
 const app = express()
 
 app.use('/', authRouters)
@@ -13,5 +16,8 @@ app.use('/api/admin', adminRouters)
 app.use('/api/customer', customerRoters)
 app.use('/api/booking', booking)
 app.use('/api/pickup', pickup)
+
+// ROUTES LAPORAN
+app.use('/api/laporan', laporanRoutes)
 
 export default app
