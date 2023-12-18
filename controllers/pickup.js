@@ -35,3 +35,71 @@ export const addPickup = async (req, res) => {
     return res.status(403).json('Token is not valid or an error occurred.')
   }
 }
+export const pickup = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 0
+    const limit = parseInt(req.query.limit) || 5
+    // const search = req.query.search_query || ''
+    const offset = limit * page
+
+    // Count total rows
+    const totalRowsResult = await query(
+      `
+      SELECT COUNT(*) as totalRows
+      FROM pickup
+      
+    `
+    )
+
+    if (!totalRowsResult || totalRowsResult.length === 0 || totalRowsResult[0].totalRows === undefined) {
+      throw new Error('Failed to retrieve totalRows')
+    }
+
+    const totalRows = totalRowsResult[0].totalRows
+
+    const totalPage = Math.ceil(totalRows / limit)
+
+    // Fetch data with pagination
+    const result = await query(
+      `
+      SELECT
+      customer.name,
+      customer.pict,
+      pickup.time,
+      pickup.id_pickup
+  FROM pickup
+  LEFT JOIN customer ON pickup.id_customer = customer.id_customer
+  ORDER BY id_pickup ASC
+  LIMIT ? OFFSET ?;
+
+    `,
+      [limit, offset]
+    )
+
+    res.json({
+      result,
+      message: 'pickup',
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error.message || 'Internal Server Error')
+  }
+}
+export const detail = async (req, res) => {
+  try {
+    const response = await query(`SELECT * FROM pickup WHERE id_pickup = ?`, [req.params.detailId])
+
+    if (response.length > 0) {
+      res.status(200).json(response)
+    } else {
+      res.status(404).json({message: 'detail not found'})
+    }
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({message: 'Internal Server Error'})
+  }
+}
