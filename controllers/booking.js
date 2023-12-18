@@ -35,3 +35,60 @@ export const addBooking = async (req, res) => {
     return res.status(403).json('Token is not valid or an error occurred.')
   }
 }
+export const booking = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 0
+    const limit = parseInt(req.query.limit) || 5
+    const search = req.query.search_query || ''
+    const offset = limit * page
+
+    // Count total rows
+    const totalRowsResult = await query(
+      `
+      SELECT COUNT(*) as totalRows
+      FROM booking
+      WHERE plat LIKE ? OR merk LIKE ?
+    `,
+      [`%${search}%`, `%${search}%`]
+    )
+
+    if (!totalRowsResult || totalRowsResult.length === 0 || totalRowsResult[0].totalRows === undefined) {
+      throw new Error('Failed to retrieve totalRows')
+    }
+
+    const totalRows = totalRowsResult[0].totalRows
+
+    const totalPage = Math.ceil(totalRows / limit)
+
+    // Fetch data with pagination
+    const result = await query(
+      `
+      SELECT booking.*,
+  customer.name,
+  customer.tlp,
+  customer.email,
+  customer.username,
+  customer.pict
+  FROM booking
+  LEFT JOIN bengkel.customer ON booking.id_customer =       customer.id_customer
+  WHERE plat LIKE ? OR merk LIKE ?
+  ORDER BY id_booking ASC
+  LIMIT ? OFFSET ?;
+
+    `,
+      [`%${search}%`, `%${search}%`, limit, offset]
+    )
+
+    res.json({
+      result,
+      message: 'data booking',
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error.message || 'Internal Server Error')
+  }
+}
