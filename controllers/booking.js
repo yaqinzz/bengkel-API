@@ -68,7 +68,7 @@ export const booking = async (req, res) => {
       customer.name,
       customer.pict
   FROM booking
-  LEFT JOIN bengkel.customer ON booking.id_customer =       customer.id_customer
+  LEFT JOIN customer ON booking.id_customer = customer.id_customer
   WHERE plat LIKE ? OR merk LIKE ?
   ORDER BY id_booking ASC
   LIMIT ? OFFSET ?;
