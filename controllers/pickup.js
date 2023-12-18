@@ -91,7 +91,8 @@ export const pickup = async (req, res) => {
 }
 export const detail = async (req, res) => {
   try {
-    const response = await query(`SELECT * FROM pickup WHERE id_pickup = ?`, [req.params.detailId])
+    const detail = req.params.detailId
+    const response = await query(`SELECT * FROM pickup WHERE id_pickup = ?`, [detail])
 
     if (response.length > 0) {
       res.status(200).json(response)
