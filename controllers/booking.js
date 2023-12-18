@@ -65,9 +65,8 @@ export const booking = async (req, res) => {
       `
       SELECT booking.status,
       booking.time,
-  customer.name,
-  
-  customer.pict
+      customer.name,
+      customer.pict
   FROM booking
   LEFT JOIN bengkel.customer ON booking.id_customer =       customer.id_customer
   WHERE plat LIKE ? OR merk LIKE ?
