@@ -63,11 +63,10 @@ export const booking = async (req, res) => {
     // Fetch data with pagination
     const result = await query(
       `
-      SELECT booking.*,
+      SELECT booking.status,
+      booking.time,
   customer.name,
-  customer.tlp,
-  customer.email,
-  customer.username,
+  
   customer.pict
   FROM booking
   LEFT JOIN bengkel.customer ON booking.id_customer =       customer.id_customer
@@ -81,7 +80,7 @@ export const booking = async (req, res) => {
 
     res.json({
       result,
-      message: 'data booking',
+      message: 'booking',
       page,
       limit,
       totalRows,
