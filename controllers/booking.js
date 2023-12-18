@@ -63,10 +63,11 @@ export const booking = async (req, res) => {
     // Fetch data with pagination
     const result = await query(
       `
-      SELECT booking.status,
-      booking.time,
+      SELECT
       customer.name,
       customer.pict
+      booking.time,
+      booking.status,
   FROM booking
   LEFT JOIN customer ON booking.id_customer = customer.id_customer
   WHERE plat LIKE ? OR merk LIKE ?
