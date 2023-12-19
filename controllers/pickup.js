@@ -109,3 +109,16 @@ export const detail = async (req, res) => {
     res.status(500).json({message: 'Internal Server Error'})
   }
 }
+
+// UPDATE STATUS
+export const patch = async (req, res) => {
+  const id = req.params.id
+  const status = req.query.status
+
+  try {
+    const result = query(`UPDATE pickup SET status = ? WHERE id_pickup = ?`, [status, id])
+    res.send(`Patch data ${result}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
