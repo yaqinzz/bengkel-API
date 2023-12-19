@@ -7,6 +7,7 @@ import pickup from './pickup.js'
 
 // IMPORT LAPORAN
 import laporanRoutes from './laporan.js'
+import reviewRoutes from './review.js'
 
 const app = express()
 
@@ -19,5 +20,6 @@ app.use('/api/pickup', pickup)
 
 // ROUTES LAPORAN
 app.use('/api/laporan', laporanRoutes)
+app.use('/api/review', reviewRoutes)
 
 export default app

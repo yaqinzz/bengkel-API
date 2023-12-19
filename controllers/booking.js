@@ -92,3 +92,16 @@ export const booking = async (req, res) => {
     res.status(500).json(error.message || 'Internal Server Error')
   }
 }
+
+// UPDATE STATUS
+export const patch = async (req, res) => {
+  const id = req.params.id
+  const status = req.query.status
+
+  try {
+    const result = query(`UPDATE booking SET status = ? WHERE id_booking = ?`, [status, id])
+    res.send(`Patch data ${result}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
