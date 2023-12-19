@@ -66,6 +66,7 @@ export const pickup = async (req, res) => {
       customer.name,
       customer.pict,
       pickup.time,
+      pickup.status,
       pickup.id_pickup
   FROM pickup
   LEFT JOIN customer ON pickup.id_customer = customer.id_customer
